@@ -1,0 +1,3 @@
+// first height above y0 (mm) where any of the named parts has a cell, along x at fixed z
+(a)=>{const ps=window.__QA.collect();const IN=X=>Math.abs(X-Math.round(X))<.49,inside=(parts,x,y,z)=>{for(const part of parts)for(const m of part.meshes){const e=m.Mi.elements,X=e[0]*x+e[4]*y+e[8]*z+e[12],Y=e[1]*x+e[5]*y+e[9]*z+e[13],Z=e[2]*x+e[6]*y+e[10]*z+e[14];if(IN(X)&&IN(Y)&&IN(Z)&&m.take(m.g.get(X,Y,Z),m.sel))return true;}return false;};
+ const out=[];for(const z of a.zs)for(let x=a.x0;x<=a.x1;x+=a.dx){let hit=null;for(let y=a.y0;y<=a.y1&&!hit;y+=10)for(const n of a.names){const pp=ps.filter(p=>p.name===n);if(pp.length&&inside(pp,x/20,y/20,z/20)){hit=n+'@'+y;break;}}out.push('z '+z+' x '+x+': '+(hit||'-'));}return out.join('\n');}

@@ -1,0 +1,1 @@
+(re)=>{const R=new RegExp('^('+re+')$');return window.__QA.collect().filter(p=>R.test(p.name)).map(p=>p.name.padEnd(16)+' x '+Math.round(p.box[0]*20)+'..'+Math.round(p.box[1]*20)+'  y '+Math.round(p.box[2]*20)+'..'+Math.round(p.box[3]*20)+'  z '+Math.round(p.box[4]*20)+'..'+Math.round(p.box[5]*20)).join('\n');}

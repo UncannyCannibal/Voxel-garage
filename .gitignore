@@ -1,0 +1,8 @@
+# dependencies (cd t && npm install)
+node_modules/
+# built pages and check reports (python gar/build_garage.py; the published page is index.html at the root)
+gar/out/
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

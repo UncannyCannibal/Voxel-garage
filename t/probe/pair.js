@@ -1,0 +1,6 @@
+// overlap of two parts in a state: 20 mm clusters [part whose points lie inside the other, x, y, z, count]
+(a)=>{const G=window.__GARAGE,st=G.state;st.steer=a.steer||0;st.roll=a.roll||0;st.pitch=a.pitch||0;G.update(0);const ps=window.__QA.collect(),pa=ps.filter(p=>p.name===a.A),pb=ps.filter(p=>p.name===a.B);
+ const IN=X=>Math.abs(X-Math.round(X))<.49,inside=(parts,x,y,z)=>{for(const part of parts)for(const m of part.meshes){const e=m.Mi.elements,X=e[0]*x+e[4]*y+e[8]*z+e[12],Y=e[1]*x+e[5]*y+e[9]*z+e[13],Z=e[2]*x+e[6]*y+e[10]*z+e[14];if(IN(X)&&IN(Y)&&IN(Z)&&m.take(m.g.get(X,Y,Z),m.sel))return true;}return false;};
+ const C=new Map();for(const [P,Q,n] of [[pa,pb,a.A],[pb,pa,a.B]])for(const part of P)for(const m of part.meshes){const s=m.pts;for(let i=0;i<s.length;i+=3)if(inside(Q,s[i],s[i+1],s[i+2])){const k=[n,...[0,1,2].map(d=>Math.floor(s[i+d]*20/20)*20)].join(' ');C.set(k,(C.get(k)||0)+1);}}
+ const ext=p=>p.map(q=>q.name+' x '+Math.round(q.box[0]*20)+'..'+Math.round(q.box[1]*20)+' y '+Math.round(q.box[2]*20)+'..'+Math.round(q.box[3]*20)+' z '+Math.round(q.box[4]*20)+'..'+Math.round(q.box[5]*20));
+ st.steer=0;st.roll=0;st.pitch=0;G.update(0);return [...ext(pa),...ext(pb),...[...C.entries()].sort().map(([k,v])=>k+'  '+v)].join('\n');}
